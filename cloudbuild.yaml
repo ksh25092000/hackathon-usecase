@@ -87,3 +87,9 @@ images:
 - 'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/patient-service:$SHORT_SHA'
 - 'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/application-service:$SHORT_SHA'
 - 'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/order-service:$SHORT_SHA'
+
+# =========================
+# Options (fix for service_account + logs bucket issue)
+# =========================
+options:
+  logging: CLOUD_LOGGING_ONLY
