@@ -1,0 +1,57 @@
+steps:
+
+# =========================
+# Build patient-service
+# =========================
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/patient-service:$SHORT_SHA',
+    './patient-service'
+  ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'push',
+    'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/patient-service:$SHORT_SHA'
+  ]
+
+# =========================
+# Build application-service
+# =========================
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/application-service:$SHORT_SHA',
+    './application-service'
+  ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'push',
+    'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/application-service:$SHORT_SHA'
+  ]
+
+# =========================
+# Build order-service
+# =========================
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/order-service:$SHORT_SHA',
+    './order-service'
+  ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'push',
+    'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/order-service:$SHORT_SHA'
+  ]
+
+images:
+- 'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/patient-service:$SHORT_SHA'
+- 'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/application-service:$SHORT_SHA'
+- 'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/order-service:$SHORT_SHA'
