@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: order-service
-        image: us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/order-service:latest
+        image: us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/order-service:TAG
         ports:
         - containerPort: 8080
 
