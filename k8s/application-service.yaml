@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: application-service
+  template:
+    metadata:
+      labels:
+        app: application-service
+    spec:
+      containers:
+      - name: application-service
+        image: us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/application-service:latest
+        ports:
+        - containerPort: 3001
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: application-service
+spec:
+  type: ClusterIP
+  selector:
+    app: application-service
+  ports:
+  - port: 80
+    targetPort: 3001
