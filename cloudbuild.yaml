@@ -1,5 +1,4 @@
 steps:
-
 # =========================
 # Build patient-service
 # =========================
@@ -50,6 +49,39 @@ steps:
     'push',
     'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/order-service:$SHORT_SHA'
   ]
+
+# =========================
+# Substitute image tags in manifests
+# =========================
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    sed "s/TAG/$SHORT_SHA/g" k8s/patient-service.yaml > k8s/patient-service-deploy.yaml
+    sed "s/TAG/$SHORT_SHA/g" k8s/application-service.yaml > k8s/application-service-deploy.yaml
+    sed "s/TAG/$SHORT_SHA/g" k8s/order-service.yaml > k8s/order-service-deploy.yaml
+
+# =========================
+# Deploy to GKE
+# =========================
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/patient-service-deploy.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/application-service-deploy.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args: ['apply', '-f', 'k8s/order-service-deploy.yaml']
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster'
 
 images:
 - 'us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/patient-service:$SHORT_SHA'
