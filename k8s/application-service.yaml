@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: application-service
-        image: us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/application-service:latest
+        image: us-central1-docker.pkg.dev/eternal-bongo-481206-q2/hackathon-repo/application-service:TAG
         ports:
         - containerPort: 3001
 
